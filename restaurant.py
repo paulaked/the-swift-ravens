@@ -38,23 +38,23 @@ class Table:
             return self.subtotal
 
             
-    def get_total(self, service_charge = 0.1):
-        self.service_charge = service_charge
+    def get_total(self, service_charge = 0.1): # needs sorting messed around with it
+        self.service_charge = service_charge * self.subtotal
         pound_sign = u'\u00a3'
         self.real_total['Sub Total'] = f'{pound_sign}{self.subtotal:.2f}'
-        self.real_total['Service Charge'] = '{}{:.2f}'.format(pound_sign, self.subtotal * service_charge)
-        total_service = self.subtotal * service_charge
-        total = total_service + self.subtotal
+        self.real_total['Service Charge'] = '{}{:.2f}'.format(pound_sign, self.service_charge)
+        total = self.service_charge + self.subtotal
         self.real_total['Total'] = f'£{self.subtotal + total}'
 
         return self.real_total
 
     def split_bill(self): # not sorted yet actuallygit
+        print(self.service_charge, self.subtotal)
         floating = float(self.subtotal)
         total = (floating * self.service_charge) * floating
         print(total)
         divider = total / self.number_of_diners
-        return round(divider, 2)
+        return round(self.service_charge)
 
 
 tab = Table(6)
