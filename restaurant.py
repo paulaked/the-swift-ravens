@@ -11,7 +11,7 @@ class Table:
         for it in self.bill:
             if it['item'] == item:
                 it['price'] += price
-                it['quantity'] += quantity
+                it['quantity'] += float(quantity)
                 add_item = False 
 
         if add_item:   
@@ -30,7 +30,7 @@ class Table:
                     del it
                     return True
                 else:                    
-                    it['quantity'] -= quantity
+                    it['quantity'] -= float(quantity)
                     return True
         return False 
 
@@ -39,7 +39,7 @@ class Table:
     def get_subtotal(self):
         subtote = 0
         for bill in self.bill:
-            calculate = bill['price'] * bill['quantity']
+            calculate = float(bill['price']) * float(bill['quantity'])
             subtote += calculate
             return float(f'{subtote:.2f}')
 
@@ -47,8 +47,9 @@ class Table:
     def get_total(self, service_charge = 0.1):
         pound_sign = u'\u00a3'
         subtote = self.get_subtotal()
-        service_charge = service_charge * subtote
+        service_charge = service_charge * float(subtote)
         self.abs_total = service_charge + subtote
+        print({self.abs_total})
         return {
             "Sub Total": f"{pound_sign}{subtote}",
             "Service Charge": f"{pound_sign}{self.service_charge_}",
@@ -60,12 +61,12 @@ class Table:
         divider = self.abs_total / self.number_of_diners
         return float(f'{divider:.3f}')
 
-tab3 = Table(3)
-tab3.order('Food', 10.00, 5)
-tab3.remove('Food', 10.00, 3)
-tab3.get_total()
-tab3.get_subtotal()
-print(tab3.bill)
+# tab3 = Table(3)
+# tab3.order('Food', 10.00, 5)
+# tab3.remove('Food', 10.00, 3)
+# tab3.get_total()
+# tab3.get_subtotal()
+# print(tab3.bill)
 # tab = Table(6)
 # tab.order('Food1', 20.00, 3)
 # tab.order('Food2', 10.00, 1)
