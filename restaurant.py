@@ -4,8 +4,6 @@ class Table:
         self.number_of_diners = number_of_diners
         self.bill = []
         self.abs_total = 0
-        self.service_charge_ = 0
-
     def order(self, item, price, quantity=1):
         add_item = True
         for it in self.bill:
@@ -38,34 +36,35 @@ class Table:
 
     def get_subtotal(self):
         subtote = 0
-        for bill in self.bill:
-            calculate = float(bill['price']) * float(bill['quantity'])
+        for num in range(len(self.bill)):
+            calculate = self.bill[num]['price'] * self.bill[num]['quantity']
             subtote += calculate
-            return float(f'{subtote:.2f}')
+        return float('{0:.2f}'.format(subtote))
 
             
     def get_total(self, service_charge = 0.1):
         pound_sign = u'\u00a3'
         subtote = self.get_subtotal()
-        service_charge = service_charge * float(subtote)
-        self.abs_total = service_charge + subtote
-        print({self.abs_total})
-        return {
-            "Sub Total": f"{pound_sign}{subtote}",
-            "Service Charge": f"{pound_sign}{self.service_charge_}",
-            "Total": f"{pound_sign}{self.abs_total}"
+        service_charge = service_charge * subtote
+        self.abs_total = round(service_charge + subtote, 2)
+        return {    
+            "Sub Total": f"{pound_sign}{subtote:.2f}",
+            "Service Charge": f"{pound_sign}{service_charge:.2f}",
+            "Total": f"{pound_sign}{self.abs_total:.2f}"
         }
 
     def split_bill(self): # not sorted yet actuallygit
-        print(self.abs_total)
         divider = self.abs_total / self.number_of_diners
-        return float(f'{divider:.3f}')
+        print(self.number_of_diners)
+        print(float(self.abs_total))
+        # return float(f'{divider:.2f}')
+        return float(f'{(self.abs_total / self.number_of_diners *100)/100:.2f}')
 
 # tab3 = Table(3)
 # tab3.order('Food', 10.00, 5)
 # tab3.remove('Food', 10.00, 3)
+# print(tab3.get_subtotal())
 # tab3.get_total()
-# tab3.get_subtotal()
 # print(tab3.bill)
 # tab = Table(6)
 # tab.order('Food1', 20.00, 3)
@@ -73,6 +72,7 @@ class Table:
 # tab.order('Food3', 3.20, 1)
 # tab.get_subtotal()
 # print(tab.get_total())
+# print(tab.bill)
 # print(tab.split_bill())
 
 # tab1 = Table('1')
