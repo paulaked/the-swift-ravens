@@ -38,7 +38,7 @@ class Table:
         subtote = 0
         for num in range(len(self.bill)):
             calculate = self.bill[num]['price'] * self.bill[num]['quantity']
-            subtote += calculate
+            subtote += calculate/100*100    
         return float('{0:.2f}'.format(subtote))
 
             
@@ -53,12 +53,12 @@ class Table:
             "Total": f"{pound_sign}{self.abs_total:.2f}"
         }
 
-    def split_bill(self): # not sorted yet actuallygit
+    def split_bill(self):
         divider = self.abs_total / self.number_of_diners
         print(self.number_of_diners)
         print(float(self.abs_total))
         # return float(f'{divider:.2f}')
-        return float(f'{(self.abs_total / self.number_of_diners *100)/100:.2f}')
+        return float(f'{self.abs_total / self.number_of_diners:.2f}')
 
 # tab3 = Table(3)
 # tab3.order('Food', 10.00, 5)
